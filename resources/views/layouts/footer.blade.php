@@ -1,4 +1,5 @@
-<footer class="mainfooter fixed-bottom" role="contentinfo">
+<!-- fixed-bottomだと固定されて動かない -->
+<footer class="mainfooter" role="contentinfo">
   <div class="footer-middle">
     <div class="container">
       <div class="row">

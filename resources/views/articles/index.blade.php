@@ -10,13 +10,13 @@
     <!-- Create post & Search by date form -->
     <div class="mt-4 mb-3">
         <div style="float: left">
-            <a href="" class="btn btn-success">Create Daily Report</a>
+            <a href="" class="btn btn-success">Create</a>
         </div>
         <div class="" style="text-align: right">
             <form name="sample" action="sample" method="post">
-                {{ csrf_field() }}
+                @csrf
                 <input type="date" name="start" value=""> 〜 <input type="date" name="end" value="">
-                <button type="button" class="btn btn-outline-success">Search</button>
+                <button type="button" class="btn btn-outline-dark">Search</button>
             </form>
         </div>
     </div>

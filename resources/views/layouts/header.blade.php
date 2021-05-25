@@ -1,6 +1,6 @@
 <header>
   <nav class="navbar navbar-expand-lg navbar-dark navbar-expand-sm fixed-top" style="background-color:#28a745">
-    <div class="container-fluid">
+    <div class="container-fluid ">
       <a class="navbar-brand" href="#">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

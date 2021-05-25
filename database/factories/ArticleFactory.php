@@ -10,11 +10,11 @@ $factory->define(Article::class, function (Faker $faker) {
         //
         'created_at' => $faker->date('Y-m-d H:i:s', 'now'),
         'updated_at' => $faker->date('Y-m-d H:i:s', 'now'),
-        'user_id' => $faker->numberBetween(1,5),
+        'user_id' => $faker->numberBetween(1,2),
         'title' => $faker->realText(20),
-        'date' => '',
-        'feeling_before' => $faker->numberBetween(1,5),
-        'feeling_after' => $faker->numberBetween(1,5),
-        'title' => $faker->realText(400),
+        'post_date' => '',
+        'feeling_before' => $faker->numberBetween(0,100),
+        'feeling_after' => $faker->numberBetween(0,100),
+        'post_content' => $faker->realText(40),
     ];
 });

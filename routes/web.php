@@ -12,14 +12,15 @@
 */
 
 Route::get('/', function () {
-    return redirect('articles');
+    // return redirect('articles');
+    return view('welcome');
 });
 
-Route::resource('articles', 'ArticleController');
+Route::resource('articles', 'ArticleController', ['only' => ['index','create']]);
+Route::resource('user', 'UserController', ['only' => ['index','create']]);
+
+Route::get('/home', 'HomeController@index');
+// Route::get('/articles', 'HomeController@index');
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/articles', 'HomeController@index')->name('home');
-
-
-Route::get('/articles', 'ArticleController@index')->name('home');
-
