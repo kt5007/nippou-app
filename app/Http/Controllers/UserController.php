@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Validator;
+use Intervention\Image\ImageManagerStatic as Image;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -13,9 +19,10 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $authUser = User::user();
+        $auth_user = Auth::user();
+        $users = DB::table('users')->get();
         $param = [
-            'authUser'=>$authUser,
+            'auth_user'=>$auth_user,
             'users'=>$users,
         ];
         return view('user.index',$param);

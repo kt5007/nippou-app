@@ -2,10 +2,10 @@
   margin:0;
   padding: 0;
 }
-　
-html,　body {
+
+html, body {
   height: 100%;
-  background-color: #FCE3BD;
+  /* background-color: #FCE3BD; */
 }
 
 #wrapper {
