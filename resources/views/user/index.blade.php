@@ -1,36 +1,44 @@
 @extends('layouts.common')
-@section('title','Profile Page')
+@section('title','User Profile')
 @section('content')
-<div class="container">
-  <table class="table table-striped table-hover">
-  <thead>
-  <tr>
-    <th></th>
-    <th>ID</th>
-    <th>名前</th>
-    <th>メールアドレス</th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>
-        <div>
-        @if(!empty($authUser->thumbnail))
-        <img src="/storage/user/{{ $authUser->thumbnail }}" class="thumbnail">
-        @else
-        画像なし
-        @endif
-        </div>
-      </td>
-      <td>{{ $authUser->id }}</td>
-      <td>{{ $authUser->name }}</td>
-      <td>{{ $authUser->email }}</td>
-      <td>
-      <a href="{{ route('user.userEdit') }}" class="btn btn-primary btn-sm">編集</a>
-      </td>
-    </tr>
-  </tbody>
-  </table>
-</div>  
+@section('title','ユーザー情報変更')
+
+
+@section('content')
+  <!-- thumbnail -->
+  <div class="topWrapper">
+  @if(!empty($authUser->thumbnail))
+    <img src="/storage/user/{{ $auth_user->thumbnail }}" class="show_thumbnail">
+  @else
+    <img src="https://nureyon.com/sample/8/upper_body-2-p2.svg?1601332163" class="show_thumbnail">
+  @endif
+  </div>
+
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-4 offset-md-4">
+        <table class="table">      
+          <tbody>
+            <tr>
+              <th scope="row">ID</th>
+              <td>{{ $auth_user->id}}</td>
+            </tr>
+            <tr>
+              <th scope="row">Name</th>
+              <td>{{ $auth_user->name }}</td>
+            </tr>
+            <tr>
+            <th scope="row">Email</th>
+              <td>{{ $auth_user->email }}</td>
+            </tr>
+            <tr>
+              <th scope="row">Password</th>
+              <td>＊＊＊＊＊＊＊＊</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 @endsection

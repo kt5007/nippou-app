@@ -15,27 +15,22 @@
     <link href="{{ asset('css/footer.css') }}"rel="stylesheet">
     <link href="{{ asset('css/header.css') }}"rel="stylesheet">
     <link href="{{ asset('css/content.css') }}"rel="stylesheet">
+    <link href="{{ asset('css/user.css') }}"rel="stylesheet">
 
     <script src="https://kit.fontawesome.com/66a7b24399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
 <!-- header -->
-
-
 @include('layouts.header')
-<div class="container"  id="wrapper">
-    <div class="row" id="content">
-        <div class="col-md-12">
-        <!-- コンテンツ -->
-        @yield('content')
-        </div>
-    </div>
+
+<div class="container"  style="margin-top:100px;padding-bottom:0px;">
+    <!-- コンテンツ -->
+    @yield('content')
 </div>
 
-<div id="wrapper">
-    @include('layouts.footer')
-</div>
+
+@include('layouts.footer')
 
 <!-- footer -->
 </body>

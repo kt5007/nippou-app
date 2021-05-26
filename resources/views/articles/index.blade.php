@@ -3,7 +3,7 @@
 @section('title', 'index page')
 
 @section('content')
-<div class="page-header" style="margin-top:100px;padding-bottom:0px;">
+<div class="page-header" >
     
     <h1 class="text-center">Your Daily reports</h1>
 
