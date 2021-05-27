@@ -8,9 +8,9 @@
   <!-- thumbnail -->
   <div class="topWrapper">
   @if(!empty($authUser->thumbnail))
-    <img src="/storage/user/{{ $auth_user->thumbnail }}" class="show_thumbnail">
+    <img src="/storage/user/{{ $auth_user->thumbnail }}" class="showThumbnail">
   @else
-    <img src="https://nureyon.com/sample/8/upper_body-2-p2.svg?1601332163" class="show_thumbnail">
+    <img src="https://nureyon.com/sample/8/upper_body-2-p2.svg?1601332163" class="showThumbnail">
   @endif
   </div>
 
@@ -37,6 +37,7 @@
             </tr>
           </tbody>
         </table>
+        <a class="btn btn-success btn-block" href="{{ route('user.edit', ['user'=>$auth_user->id]) }}" role="button">Edit</a>
       </div>
     </div>
   </div>

@@ -20,12 +20,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $auth_user = Auth::user();
-        $users = DB::table('users')->get();
-        $param = [
-            'auth_user'=>$auth_user,
-            'users'=>$users,
-        ];
-        return view('user.index',$param);
+        return view('user.index',compact('auth_user'));
     }
 
     /**
@@ -66,9 +61,11 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
         //
+        $auth_user = Auth::user();
+        return view('user.edit',compact('auth_user'));
     }
 
     /**
@@ -80,7 +77,41 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // Validator check
+        $rules = [
+            'user_id' => 'integer|required',
+            'name' => 'required|max:100|string',
+            'email' => 'required|email:strict,dns,spoof',
+            'password' => 'required|'
+
+        ];
+        $messages = [
+            'user_id.integer' => 'SystemError:システム管理者にお問い合わせください',
+            'user_id.required' => 'SystemError:システム管理者にお問い合わせください',
+            'name.required' => 'ユーザー名が未入力です',
+        ];
+        $validator = Validator::make($request->all(),$rules,$messages);
+
+        $param = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => $request->password,
+        ];
+
+        $uploadfile = $request->file('thumbnail');
+        if(!empty($uploadfile)){
+            $thumbnailname = $request->file('thumbnail')->hashName();
+            $request->file('thumbnail')->storeAs('public/user', $thumbnailname);
+            $param['thumbnail'] = $thumbnailname;
+        }
+
+        DB::table('users')
+            ->where('id',$request->id)
+            ->update($param);
+        
+        
+        return redirect(route('user.edit'))->with('success', '保存しました。');
+
     }
 
     /**
