@@ -10,7 +10,7 @@
   border-radius: 50%;
 }
 
-.show_thumbnail {
+.showThumbnail {
   width: 150px;
   height: 150px;
   object-fit: cover;
@@ -19,33 +19,8 @@
 }
 
 .buttonSet {
-  margin: 30px 0 0 0;
+  margin: 15px 0 0 0;
   text-align: center;
-}
-
-.labelTitle {
-  color: #006DD9;
-  margin: 20px 0 5px 0;
-}
-
-input[class="userForm"] {
-  width: 100%;
-  padding: 5px 0 5px 10px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  transition: 1s;
-}
-input[class="userForm"]:focus {
-  background: #87ceeb;
-}
-
-.btn-done {
-  background: #dc143c;
-  border: 1px solid #dc143c;
-}
-.btn-done:hover {
-  background: #cc1237;
-  border: 1px solid #cc1237;
 }
 
 .error {
