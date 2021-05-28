@@ -8,9 +8,9 @@
           <div class="footer-pad">
             <h4>Site Links</h4>
             <ul class="list-unstyled">
-              <li><a href="#">Home</a></li>
+              <li><a href="{{ route('articles.index') }}">Home</a></li>
               <li><a href="#">Motivation Graph</a></li>
-              <li><a href="#">Profile</a></li>
+              <li><a href="{{ route('user.index') }}">Profile</a></li>
               <!-- <li><a href="#">Payment Center</a></li> -->
             </ul>
           </div>

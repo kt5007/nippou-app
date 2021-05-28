@@ -6,10 +6,10 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
-
+use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
@@ -77,41 +77,50 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $auth_user = Auth::user();
         // Validator check
         $rules = [
-            'user_id' => 'integer|required',
-            'name' => 'required|max:100|string',
-            'email' => 'required|email:strict,dns,spoof',
-            'password' => 'required|'
-
+            'name' => ['required', 'max:100'],
+            'email' => ['required'],
+            'password' => ['required','confirmed','min:8'],
         ];
         $messages = [
-            'user_id.integer' => 'SystemError:システム管理者にお問い合わせください',
-            'user_id.required' => 'SystemError:システム管理者にお問い合わせください',
-            'name.required' => 'ユーザー名が未入力です',
-        ];
-        $validator = Validator::make($request->all(),$rules,$messages);
-
-        $param = [
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password,
+            'name.required' => '名前が未記入です',
+            'name.max' => '100字以下でお願いします',
+            'email.required' => 'メールアドレスが未記入です',
         ];
 
-        $uploadfile = $request->file('thumbnail');
-        if(!empty($uploadfile)){
-            $thumbnailname = $request->file('thumbnail')->hashName();
-            $request->file('thumbnail')->storeAs('public/user', $thumbnailname);
-            $param['thumbnail'] = $thumbnailname;
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return redirect()
+            -> route('user.edit',[$auth_user])
+            ->withErrors($validator)
+            ->withInput();
         }
 
-        DB::table('users')
-            ->where('id',$request->id)
-            ->update($param);
-        
-        
-        return redirect(route('user.edit'))->with('success', '保存しました。');
+        $users = DB::table('users');
+        $name = $request->get('name');
+        $email = $request->get('email');
+        $hashed_password = bcrypt($request->get('password'));
+        $uploadfile = $request->file('thumbnail');
 
+        if(!empty($uploadfile)){
+            $thumbnailname = $uploadfile->hashName();
+            $uploadfile->storeAs('public/user', $thumbnailname);
+        }else{
+            $thumbnailname = $auth_user->thumbnail;
+        }
+
+        $users->where('id',$auth_user->id)
+            ->update([
+                'name'=>$name,
+                'email'=>$email,
+                'password'=>$hashed_password,
+                'thumbnail'=>$thumbnailname,
+            ]);
+
+        return redirect(route('user.index'))->with('success', '保存しました。');
     }
 
     /**
@@ -123,5 +132,8 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+        DB::table('users')->where('id', '=', $id)->delete();
+        Auth::logout();
+        return redirect('/');
     }
 }
