@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Auth;
+use DB;
 class ArticleController extends Controller
 {
     /**
@@ -15,7 +16,15 @@ class ArticleController extends Controller
     public function index()
     {
         //
-        return view('articles.index');
+        // $user_id=Auth::id();
+        // $user_id=$auth_user->id;
+        $user_id=2;
+        $auth_user_articles = DB::table('articles')
+            ->where('user_id','=',$user_id)
+            ->get();
+
+        // dd($articles);
+        return view('articles.index',compact($auth_user_articles));
     }
 
     /**

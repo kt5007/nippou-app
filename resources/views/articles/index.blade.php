@@ -20,6 +20,9 @@
             </form>
         </div>
     </div>
+    @foreach($auth_user_articles as $auth_user_article => $title)
+    {{$title}}
+    @endforeach
 
     <table class="table table-striped table-hover">
     <thead>
