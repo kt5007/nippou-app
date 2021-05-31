@@ -20,9 +20,6 @@
             </form>
         </div>
     </div>
-    @foreach($auth_user_articles as $auth_user_article => $title)
-    {{$title}}
-    @endforeach
 
     <table class="table table-striped table-hover">
     <thead>
@@ -30,51 +27,21 @@
     <th>No</th>
     <th>date</th>
     <th>title</th>
-    <th>content</th>
+    <th>motivation <br> before/after</th>
     <th>opration</th>
     </tr>
     </thead>
     <tbody>
+    @foreach($auth_user_articles as $auth_user_article)    
     <tr>
-    <td>01</td><td>hoge foo</td><td>hoge@foo.com</td><td>06-1234-5678</td>
+    <td>{{$auth_user_article->id}}</td><td>{{$auth_user_article->post_date}}</td><td>{{$auth_user_article->title}}</td><td>{{$auth_user_article->feeling_before}} / {{$auth_user_article->feeling_after}}</td>
     <td>
-    <a href="" class="btn btn-outline-dark btn-sm">Details</a>
-    <a href="" class="btn btn-outline-dark btn-sm">Edit</a>
-    <a href="" class="btn btn-outline-danger btn-sm">Delete</a>
+    <a href="{{ route('articles.show', ['article'=>$auth_user_article->id]) }}" class="btn btn-outline-dark btn-sm">Details</a>
+    <a href="{{ route('articles.edit', ['article'=>$auth_user_article->id]) }}" class="btn btn-outline-dark btn-sm">Edit</a>
+    <a href="{{ route('articles.destroy', ['article'=>$auth_user_article->id]) }}" class="btn btn-outline-danger btn-sm">Delete</a>
     </td>
     </tr>
-    <tr>
-    <td>02</td><td>hoge foo</td><td>hoge@foo.com</td><td>06-1234-5678</td>
-    <td>
-    <a href="" class="btn btn-outline-dark btn-sm">Details</a>
-    <a href="" class="btn btn-outline-dark btn-sm">Edit</a>
-    <a href="" class="btn btn-outline-danger btn-sm">Delete</a>
-    </td>
-    </tr>
-    <tr>
-    <td>03</td><td>hoge foo</td><td>hoge@foo.com</td><td>06-1234-5678</td>
-    <td>
-    <a href="" class="btn btn-outline-dark btn-sm">Details</a>
-    <a href="" class="btn btn-outline-dark btn-sm">Edit</a>
-    <a href="" class="btn btn-outline-danger btn-sm">Delete</a>
-    </td>
-    </tr>
-    <tr>
-    <td>04</td><td>hoge foo</td><td>hoge@foo.com</td><td>06-1234-5678</td>
-    <td>
-    <a href="" class="btn btn-outline-dark btn-sm">Details</a>
-    <a href="" class="btn btn-outline-dark btn-sm">Edit</a>
-    <a href="" class="btn btn-outline-danger btn-sm">Delete</a>
-    </td>
-    </tr>
-    <tr>
-    <td>05</td><td>hoge foo</td><td>hoge@foo.com</td><td>06-1234-5678</td>
-    <td>
-    <a href="" class="btn btn-outline-dark btn-sm">Details</a>
-    <a href="" class="btn btn-outline-dark btn-sm">Edit</a>
-    <a href="" class="btn btn-outline-danger btn-sm">Delete</a>
-    </td>
-    </tr>
+    @endforeach
     </tbody>
     </table>
 </div>
