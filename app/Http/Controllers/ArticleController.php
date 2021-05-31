@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
 class ArticleController extends Controller
 {
     /**
@@ -23,8 +23,8 @@ class ArticleController extends Controller
             ->where('user_id','=',$user_id)
             ->get();
 
-        // dd($articles);
-        return view('articles.index',compact($auth_user_articles));
+        // dd($auth_user_articles);
+        return view('articles.index',compact('auth_user_articles'));
     }
 
     /**
@@ -58,6 +58,7 @@ class ArticleController extends Controller
     public function show(Article $article)
     {
         //
+        return view('articles.details',compact('article'));
     }
 
     /**
@@ -69,6 +70,7 @@ class ArticleController extends Controller
     public function edit(Article $article)
     {
         //
+        return view('articles.edit',compact('article'));
     }
 
     /**
