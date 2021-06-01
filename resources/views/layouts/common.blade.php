@@ -16,6 +16,7 @@
     <link href="{{ asset('css/header.css') }}"rel="stylesheet">
     <link href="{{ asset('css/content.css') }}"rel="stylesheet">
     <link href="{{ asset('css/user.css') }}"rel="stylesheet">
+    <link href="{{ asset('css/common.css') }}"rel="stylesheet">
 
     <script src="https://kit.fontawesome.com/66a7b24399.js" crossorigin="anonymous"></script>
 </head>

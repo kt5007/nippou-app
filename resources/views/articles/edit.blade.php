@@ -9,9 +9,9 @@
             Edit Daily report
         </h1>
 
-        <form method="POST" action="">
+        <form method="POST" action="{{ route('articles.update', ['article'=>$article->id]) }}">
             @csrf
-
+            @method('PUT')
             <fieldset class="mb-4">
 
               <div class="form-group">
@@ -44,7 +44,7 @@
                 <button type="submit" class="btn btn-success">
                   Confirm
                 </button>
-                <a class="btn btn-secondary" href="">
+                <a class="btn btn-secondary" href="{{ route('articles.index') }}">
                   Cancel
                 </a>
               </div>

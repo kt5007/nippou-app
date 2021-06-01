@@ -16,7 +16,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::resource('articles', 'ArticleController', ['only' => ['index','create','show','destroy','edit']]);
+Route::resource('articles', 'ArticleController', ['only' => ['index','create','show','destroy','edit','store','update']]);
 Route::resource('user', 'UserController', ['only' => ['index','create','edit','update', 'destroy']]);
 
 Route::get('/home', 'HomeController@index');

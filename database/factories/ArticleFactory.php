@@ -10,7 +10,7 @@ $factory->define(Article::class, function (Faker $faker) {
         //
         'created_at' => $faker->date('Y-m-d H:i:s', 'now'),
         'updated_at' => $faker->date('Y-m-d H:i:s', 'now'),
-        'user_id' => $faker->numberBetween(1,2),
+        'user_id' => '',
         'title' => $faker->realText(20),
         'post_date' => '',
         'feeling_before' => $faker->numberBetween(0,100),

@@ -16,14 +16,11 @@ class ArticleController extends Controller
     public function index()
     {
         //
-        // $user_id=Auth::id();
-        // $user_id=$auth_user->id;
-        $user_id=2;
+        $auth_user_id=Auth::id();
         $auth_user_articles = DB::table('articles')
-            ->where('user_id','=',$user_id)
-            ->get();
-
-        // dd($auth_user_articles);
+            ->where('user_id','=',$auth_user_id)
+            ->orderBy('post_date', 'desc')
+            ->paginate(10);
         return view('articles.index',compact('auth_user_articles'));
     }
 
@@ -47,6 +44,14 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
+        $create_post_date=$request->only(
+            'post_date','title','feeling_before','feeling_after','post_content'
+        );
+        $auth_user_id=Auth::id();
+        $create_post_date=array_merge($create_post_date,['user_id'=>$auth_user_id]);
+        DB::table('articles')
+            ->insert($create_post_date);
+        return redirect('/articles');
     }
 
     /**
@@ -83,6 +88,13 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
         //
+        $edit_post_date = $request->only(
+            'user_id','post_date','title','feeling_before','feeling_after','post_content'
+        );
+        DB::table('articles')
+            ->where('id','=',$article->id)
+            ->update($edit_post_date);
+            return redirect('/articles');
     }
 
     /**
@@ -94,5 +106,7 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         //
+
+        dd('kento');
     }
 }
