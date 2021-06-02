@@ -16,8 +16,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::post('articles/search', 'ArticleController@search')->name('articles.search');
 Route::resource('articles', 'ArticleController', ['only' => ['index','create','show','destroy','edit','store','update']]);
 Route::resource('user', 'UserController', ['only' => ['index','create','edit','update', 'destroy']]);
+Route::get('motivation', 'MotivationController@index');
 
 Route::get('/home', 'HomeController@index');
 // Route::get('/articles', 'HomeController@index');

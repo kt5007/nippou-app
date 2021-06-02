@@ -15,16 +15,24 @@ class ArticleController extends Controller
      */
     public function index(Request $request)
     {
-        $a=$request ->start_date;
-        if(!empty($a)){
-            dd($a);
-        }
         $auth_user_id=Auth::id();
+        $start_date=$request->start_date;
+        $end_date=$request->end_date;
+        
+        if(!empty($start_date)){
+            $auth_user_articles=DB::table('articles')
+            ->where('user_id', '=', $auth_user_id)
+            ->whereDate('post_date', '>=', $start_date)
+                ->whereDate('post_date', '<=', $end_date)
+                ->paginate(10);
+            return view('articles.index',compact('auth_user_articles','start_date','end_date'));
+        }
+
         $auth_user_articles = DB::table('articles')
             ->where('user_id','=',$auth_user_id)
             ->orderBy('post_date', 'desc')
             ->paginate(10);
-        return view('articles.index',compact('auth_user_articles'));
+        return view('articles.index',compact('auth_user_articles','start_date','end_date'));
     }
 
     /**
@@ -105,6 +113,23 @@ class ArticleController extends Controller
     {
         DB::table('articles')->where('id', '=', $article->id)->delete();
         return redirect('/articles');
+    }
+
+    public function search(Request $request)
+    {
+        $auth_user_id=Auth::id();
+        $start_date=$request->start_date;
+        $end_date=$request->end_date;
+    
+        $search_articles=DB::table('articles')
+            ->where('user_id', '=', $auth_user_id)
+            ->whereDate('post_date', '>=', $start_date)
+            ->whereDate('post_date', '<=', $end_date)
+            ->paginate(10);
+
+        dd($search_articles);
+        return view('articles.search',compact('search_articles'));
+
     }
 
 }
