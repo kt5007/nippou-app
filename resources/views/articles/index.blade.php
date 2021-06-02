@@ -13,9 +13,9 @@
             <a href="{{ route('articles.create')}}" class="btn btn-success">Create</a>
         </div>
         <div class="" style="text-align: right">
-            <form name="sample" action="sample" method="post">
+            <form name="sample" action="{{ route('articles.index') }}" method="post">
                 @csrf
-                <input type="date" name="start" value=""> 〜 <input type="date" name="end" value="">
+                <input type="date" name="start_date" value=""> 〜 <input type="date" name="end_date" value="">
                 <button type="button" class="btn btn-outline-dark">Search</button>
             </form>
         </div>
@@ -36,10 +36,12 @@
     <tr>
     <td>{{$auth_user_article->id}}</td><td>{{$auth_user_article->post_date}}</td><td>{{$auth_user_article->title}}</td><td>{{$auth_user_article->feeling_before}} → {{$auth_user_article->feeling_after}}</td>
     <td>
-        <form method="post">
+        <form action="{{ route('articles.destroy',['article'=>$auth_user_article->id]) }}" method="post">
+            @csrf
+            @method('DELETE')
             <a href="{{ route('articles.show', ['article'=>$auth_user_article->id]) }}" class="btn btn-outline-dark btn-sm">Details</a>
             <a href="{{ route('articles.edit', ['article'=>$auth_user_article->id]) }}" class="btn btn-outline-dark btn-sm">Edit</a>
-            <a href="{{ route('articles.destroy', ['article'=>$auth_user_article->id]) }}" class="btn btn-outline-danger btn-sm">Delete</a>
+            <input type="submit" value="Delete" class="btn btn-outline-danger btn-sm"  onclick='return confirm("Are you sure you want to delete？");'>
         </form>
     </td>
     </tr>
@@ -47,5 +49,8 @@
     </tbody>
     </table>
 </div>
-{{ $auth_user_articles->links() }}
+<div class="pagination">
+    {{ $auth_user_articles->links() }}
+</div>
+
 @endsection

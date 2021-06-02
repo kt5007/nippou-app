@@ -13,9 +13,12 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $a=$request ->start_date;
+        if(!empty($a)){
+            dd($a);
+        }
         $auth_user_id=Auth::id();
         $auth_user_articles = DB::table('articles')
             ->where('user_id','=',$auth_user_id)
@@ -31,7 +34,6 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
         return view('articles.create');
     }
 
@@ -43,7 +45,6 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        //
         $create_post_date=$request->only(
             'post_date','title','feeling_before','feeling_after','post_content'
         );
@@ -62,7 +63,6 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
         return view('articles.details',compact('article'));
     }
 
@@ -74,7 +74,6 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        //
         return view('articles.edit',compact('article'));
     }
 
@@ -87,7 +86,6 @@ class ArticleController extends Controller
      */
     public function update(Request $request, Article $article)
     {
-        //
         $edit_post_date = $request->only(
             'user_id','post_date','title','feeling_before','feeling_after','post_content'
         );
@@ -105,8 +103,8 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        //
-
-        dd('kento');
+        DB::table('articles')->where('id', '=', $article->id)->delete();
+        return redirect('/articles');
     }
+
 }
