@@ -2,3 +2,19 @@
   margin: 15px 0 0 0;
   text-align: center;
 }
+
+.pagination > li > a,
+.pagination > li > span {
+    color: black;
+}
+
+.pagination > .active > a,
+.pagination > .active > a:focus,
+.pagination > .active > a:hover,
+.pagination > .active > span,
+.pagination > .active > span:focus,
+.pagination > .active > span:hover {
+    background-color: #57FF23;
+    border-color: #57FF23;
+    color: white;
+}
