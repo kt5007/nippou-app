@@ -16,7 +16,8 @@
                 <form name="sample" action="{{ route('articles.index') }}" method="get">
                     @csrf
 
-                    <input type="date" name="start_date" value="{{ $start_date }}"> 〜 <input type="date" name="end_date" value="{{ $end_date }}">
+                    <input type="date" name="start_date" value="{{ $start_date }}"> 〜 <input type="date" name="end_date"
+                        value="{{ $end_date }}">
                     <button type="submit" class="btn btn-outline-dark">Search</button>
                 </form>
             </div>
@@ -57,6 +58,7 @@
             </tbody>
         </table>
     </div>
+
     <div class="pagination">
         {{ $auth_user_articles->appends(request()->query())->links() }}
     </div>
