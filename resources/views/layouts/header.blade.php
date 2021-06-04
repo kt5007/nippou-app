@@ -7,7 +7,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
         <div class="navbar-nav mr-auto">  
-          <a class="nav-item nav-link active" href="#">Motivation Graph</a>
+          <a class="nav-item nav-link active" href="/motivation">Motivation Graph</a>
           <a class="nav-item nav-link active" href="{{ route('user.index') }}">Profile</a>
         </div>
         <div class="navbar-nav">  

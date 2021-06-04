@@ -1,4 +1,4 @@
-<DOCTYPE HTML>
+<!DOCTYPE HTML>
 
 <html lang="ja">
 <head>
@@ -16,8 +16,10 @@
     <link href="{{ asset('css/header.css') }}"rel="stylesheet">
     <link href="{{ asset('css/content.css') }}"rel="stylesheet">
     <link href="{{ asset('css/user.css') }}"rel="stylesheet">
+    <link href="{{ asset('css/canvas.css') }}"rel="stylesheet">
     <link href="{{ asset('css/common.css') }}"rel="stylesheet">
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
     <script src="https://kit.fontawesome.com/66a7b24399.js" crossorigin="anonymous"></script>
 </head>
 <body>
