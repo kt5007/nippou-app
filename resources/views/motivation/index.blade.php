@@ -6,40 +6,42 @@
 
     <div class="container center-block">
         <div class="page-header">
-            <h1 class="text-center">Your Motivation Graph</h1>
+            <h1 class="text-center">Your motivation graph for the last two weeks</h1>
         </div>
 
-        <canvas id="ex_chart"></canvas>
+        <div class="mt-5">
+            <canvas id="ex_chart"></canvas>
 
-        <script>
-            var ctx = document.getElementById('ex_chart');
+            <script>
+                var ctx = document.getElementById('ex_chart');
 
-            var data = {
-                labels:  @json($reverse_dates) ,
-                datasets: [{
-                        label: '始める前',
-                        data:  @json($reverse_before_scores) ,
-                        borderColor: 'rgba(255, 100, 100, 1)',
-                        fill: false,
-                    },
-                    {
-                        label: '終わった後',
-                        data:  @json($reverse_after_scores),
-                        borderColor: 'rgba(100, 100, 255, 1)',
-                        fill: false,
-                    }
-                ]
-            };
+                var data = {
+                    labels: @json($reverse_dates),
+                    datasets: [{
+                            label: 'before',
+                            data: @json($reverse_before_scores),
+                            borderColor: 'rgba(255, 100, 100, 1)',
+                            fill: false,
+                        },
+                        {
+                            label: 'after',
+                            data: @json($reverse_after_scores),
+                            borderColor: 'rgba(100, 100, 255, 1)',
+                            fill: false,
+                        }
+                    ]
+                };
 
-            var options = {};
+                var options = {};
 
-            var ex_chart = new Chart(ctx, {
-                type: 'line',
-                data: data,
-                options: options
-            });
+                var ex_chart = new Chart(ctx, {
+                    type: 'line',
+                    data: data,
+                    options: options
+                });
 
-        </script>
+            </script>
+        </div>
     </div>
 
 @endsection
