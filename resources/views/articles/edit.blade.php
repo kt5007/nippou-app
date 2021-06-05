@@ -15,9 +15,21 @@
             <fieldset class="mb-4">
 
               <div class="form-group">
-                <label for="subject">Date</label>
-                <input id="post_date" name="post_date" class="form-control" value="{{ $article->post_date }}" type="text">
-              </div>
+                <label for="subject">
+                    Date
+                </label>
+                <input id="post_date" name="post_date"
+                    class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
+                    value="{{ $article->post_date }}"
+                    type="date" 
+                    min="1900-01-01"
+                    max="2100-12-31">
+                @if ($errors->has('post_date'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('post_date') }}
+                    </div>
+                @endif
+            </div>
 
               <div class="form-group">
                 <label for="subject">Title</label>

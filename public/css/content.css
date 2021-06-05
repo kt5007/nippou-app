@@ -3,11 +3,6 @@
   padding: 0;
 }
 
-html, body {
-  height: 100%;
-  /* background-color: #FCE3BD; */
-}
-
 #wrapper {
   width: 100%;
   position:relative;
