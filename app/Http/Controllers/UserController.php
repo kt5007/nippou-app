@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+
 class UserController extends Controller
 {
     /**
@@ -20,7 +21,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $auth_user = Auth::user();
-        return view('user.index',compact('auth_user'));
+        return view('user.index', compact('auth_user'));
     }
 
     /**
@@ -63,9 +64,8 @@ class UserController extends Controller
      */
     public function edit(Request $request)
     {
-        //
         $auth_user = Auth::user();
-        return view('user.edit',compact('auth_user'));
+        return view('user.edit', compact('auth_user'));
     }
 
     /**
@@ -78,49 +78,50 @@ class UserController extends Controller
     public function update(Request $request, $id)
     {
         $auth_user = Auth::user();
-        // Validator check
+
         $rules = [
+            'thumbnail' => 'file|mimes:jpeg,png,jpg,bmb|max:2048',
             'name' => ['required', 'max:100'],
             'email' => ['required'],
-            'password' => ['required','confirmed','min:8'],
+            'current_password' => ['required'],
+            'password' => [''],
+            'password_confirmation' => ['same:password'],
         ];
-        $messages = [
-            'name.required' => '名前が未記入です',
-            'name.max' => '100字以下でお願いします',
-            'email.required' => 'メールアドレスが未記入です',
-        ];
+        $validator = Validator::make($request->all(), $rules);
 
-        $validator = Validator::make($request->all(), $rules, $messages);
-
-        if ($validator->fails()) {
-            return redirect()
-            -> route('user.edit',[$auth_user])
-            ->withErrors($validator)
-            ->withInput();
-        }
-
-        $users = DB::table('users');
-        $name = $request->get('name');
-        $email = $request->get('email');
-        $hashed_password = bcrypt($request->get('password'));
-        $uploadfile = $request->file('thumbnail');
-
-        if(!empty($uploadfile)){
+        // サムネイル画像の変更がある場合は格納
+        if (!empty($uploadfile)) {
             $thumbnailname = $uploadfile->hashName();
             $uploadfile->storeAs('public/user', $thumbnailname);
-        }else{
+        } else {
             $thumbnailname = $auth_user->thumbnail;
         }
 
-        $users->where('id',$auth_user->id)
-            ->update([
-                'name'=>$name,
-                'email'=>$email,
-                'password'=>$hashed_password,
-                'thumbnail'=>$thumbnailname,
-            ]);
+        // 現在のパスワードと一致しているか確認
+        if (Hash::check($request->current_password, $auth_user->password)) {
+            
+            if ($validator->fails()) {
+                return redirect()
+                    ->route('user.edit', [$auth_user])
+                    ->withErrors($validator)
+                    ->withInput();
+            }else{
+                DB::table('users')
+                    ->where('id','=',$auth_user->id)
+                    ->update([
+                        'name' => $request->name,
+                        'email' => $request->email,
+                        'thumbnail' => $thumbnailname,
+                        'password' => Hash::make($request->password),
+                    ]);
+                $request->session()->flash('success', 'Password changed');
+                return redirect()->route('user.index')->with('success', 'Saved');
+            }
 
-        return redirect(route('user.index'))->with('success', '保存しました。');
+        } else {
+            $request->session()->flash('error', 'Current Password does not match');
+            return redirect()->route('user.edit',compact('auth_user'));
+        }
     }
 
     /**
