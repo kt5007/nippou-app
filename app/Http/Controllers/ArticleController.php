@@ -6,6 +6,9 @@ use App\Article;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Services\ArticleService;
+use App\Http\Requests\ArticlePostRequest;
+
 class ArticleController extends Controller
 {
     /**
@@ -13,26 +16,33 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    protected $article_service;
+
+    public function __construct(ArticleService $article_service)
+    {
+        $this->article_service = $article_service;
+    }
+
     public function index(Request $request)
     {
-        $auth_user_id=Auth::id();
-        $start_date=$request->start_date;
-        $end_date=$request->end_date;
-        
-        if(!empty($start_date)){
-            $auth_user_articles=DB::table('articles')
-            ->where('user_id', '=', $auth_user_id)
-            ->whereDate('post_date', '>=', $start_date)
+        $auth_user_id = Auth::id();
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        if (!empty($start_date)) {
+            $auth_user_articles = DB::table('articles')
+                ->where('user_id', '=', $auth_user_id)
+                ->whereDate('post_date', '>=', $start_date)
                 ->whereDate('post_date', '<=', $end_date)
                 ->paginate(10);
-            return view('articles.index',compact('auth_user_articles','start_date','end_date'));
+            return view('articles.index', compact('auth_user_articles', 'start_date', 'end_date'));
         }
 
         $auth_user_articles = DB::table('articles')
-            ->where('user_id','=',$auth_user_id)
+            ->where('user_id', '=', $auth_user_id)
             ->orderBy('post_date', 'desc')
             ->paginate(10);
-        return view('articles.index',compact('auth_user_articles','start_date','end_date'));
+        return view('articles.index', compact('auth_user_articles', 'start_date', 'end_date'));
     }
 
     /**
@@ -51,15 +61,27 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ArticlePostRequest $request)
     {
-        $create_post_date=$request->only(
-            'post_date','title','feeling_before','feeling_after','post_content'
+        // 追加で入力チェックを行う
+        // $check_duplicate_date = $this->article_service->checkDuplicateDate($user_id, $post_date);
+        // if (!$check_duplicate_date ) {
+        //     $validator->errors()->add('duplicate_date', '日付が重複しています。');
+        // }
+
+        $create_post_date = $request->only(
+            'post_date',
+            'title',
+            'feeling_before',
+            'feeling_after',
+            'post_content'
         );
-        $auth_user_id=Auth::id();
-        $create_post_date=array_merge($create_post_date,['user_id'=>$auth_user_id]);
+
+        $auth_user_id = Auth::id();
+        $create_post_date = array_merge($create_post_date, ['user_id' => $auth_user_id]);
         DB::table('articles')
             ->insert($create_post_date);
+        $request->session()->flash('success', 'Saved');
         return redirect('/articles');
     }
 
@@ -71,7 +93,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        return view('articles.details',compact('article'));
+        return view('articles.details', compact('article'));
     }
 
     /**
@@ -82,7 +104,7 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        return view('articles.edit',compact('article'));
+        return view('articles.edit', compact('article'));
     }
 
     /**
@@ -92,15 +114,21 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Article $article)
+    public function update(ArticlePostRequest $request, Article $article)
     {
         $edit_post_date = $request->only(
-            'user_id','post_date','title','feeling_before','feeling_after','post_content'
+            'user_id',
+            'post_date',
+            'title',
+            'feeling_before',
+            'feeling_after',
+            'post_content'
         );
         DB::table('articles')
-            ->where('id','=',$article->id)
+            ->where('id', '=', $article->id)
             ->update($edit_post_date);
-            return redirect('/articles');
+        $request->session()->flash('success', 'Saved');
+        return redirect('/articles');
     }
 
     /**
@@ -117,19 +145,17 @@ class ArticleController extends Controller
 
     public function search(Request $request)
     {
-        $auth_user_id=Auth::id();
-        $start_date=$request->start_date;
-        $end_date=$request->end_date;
-    
-        $search_articles=DB::table('articles')
+        $auth_user_id = Auth::id();
+        $start_date = $request->start_date;
+        $end_date = $request->end_date;
+
+        $search_articles = DB::table('articles')
             ->where('user_id', '=', $auth_user_id)
             ->whereDate('post_date', '>=', $start_date)
             ->whereDate('post_date', '<=', $end_date)
             ->paginate(10);
 
         dd($search_articles);
-        return view('articles.search',compact('search_articles'));
-
+        return view('articles.search', compact('search_articles'));
     }
-
 }

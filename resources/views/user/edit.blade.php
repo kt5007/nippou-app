@@ -36,7 +36,7 @@
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="thumbnail" name="thumbnail">
                                 <label class="custom-file-label" for="thumbnail" data-browse="
-                                Reference">Choose file (Can be dropped)</label>
+                                    Reference">Choose file (Can be dropped)</label>
                             </div>
                             <div class="input-group-append">
                                 <button type="button" class="btn btn-outline-secondary input-group-text"

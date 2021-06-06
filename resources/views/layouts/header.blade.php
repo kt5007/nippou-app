@@ -8,8 +8,8 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                
-              <div class="navbar-nav mr-auto">
+
+                <div class="navbar-nav mr-auto">
                     <a class="nav-item nav-link active" href="{{ route('articles.index') }}">Articles</a>
                     <a class="nav-item nav-link active" href="/motivation">Motivation Graph</a>
                     <a class="nav-item nav-link active" href="{{ route('user.index') }}">Profile</a>
@@ -18,7 +18,7 @@
                 <div class="navbar-nav">
                     <a class="nav-item nav-link active" href="{{ route('logout') }}" onclick="event.preventDefault();
                                 document.getElementById('logout-form').submit();">
-                                Logout
+                        Logout
                     </a>
                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                         @csrf
