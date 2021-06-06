@@ -3,6 +3,7 @@
 @section('title', 'index page')
 
 @section('content')
+
     <div class="container" style="margin-top:100px;padding-bottom:0px;">
         <div class="border p-4">
             <h1 class="h4 mb-4 font-weight-bold">
@@ -18,13 +19,12 @@
                             Date
                         </label>
                         <input id="post_date" name="post_date"
-                            class="form-control {{ $errors->has('name') ? 'is-invalid' : '' }}"
-                            value="{{ old('date') }}" type="date" min="1900-01-01" max="2100-12-31">
-                        @if ($errors->has('post_date'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('post_date') }}
-                            </div>
-                        @endif
+                            class="form-control {{ $errors->has('post_date') ? 'is-invalid' : '' }}"
+                            value="{{ old('post_date') }}" type="date" min="1900-01-01" max="2100-12-31">
+                        <div class="invalid-feedback">
+                            {{ $errors->first('post_date') }}
+                        </div>
+                        <div class="valid-feedback">OK</div>
                     </div>
 
                     <div class="form-group">
@@ -34,40 +34,43 @@
                         <input id="title" name="title"
                             class="form-control {{ $errors->has('title') ? 'is-invalid' : '' }}"
                             value="{{ old('title') }}" type="text">
-                        @if ($errors->has('title'))
-                            <div class="invalid-feedback">
-                                {{ $errors->first('title') }}
-                            </div>
-                        @endif
+                        <div class="invalid-feedback">
+                            {{ $errors->first('title') }}
+                        </div>
                     </div>
 
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="feeling_before">Motivation before work</label>
-                            <input class="form-control" id="feeling_before" name="feeling_before" type="number" min="0"
-                                max="100" step="1"
-                                class="form-control {{ $errors->has('feeling_before') ? 'is-invalid' : '' }}">
+                            <input id="feeling_before" name="feeling_before" type="number" min="0" max="100" step="1"
+                                class="form-control {{ $errors->has('feeling_before') ? 'is-invalid' : '' }}"
+                                value="{{ old('feeling_before') }}">
+                            <div class="invalid-feedback">
+                                {{ $errors->first('feeling_before') }}
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label for="feeling_after">Motivation after work</label>
-                            <input class="form-control" id="feeling_after" name="feeling_after" type="number" min="0"
-                                max="100" step="1"
-                                class="form-control {{ $errors->has('feeling_after') ? 'is-invalid' : '' }} ">
+                            <input id="feeling_after" name="feeling_after" type="number" min="0" max="100" step="1"
+                                class="form-control {{ $errors->has('feeling_after') ? 'is-invalid' : '' }}"
+                                value="{{ old('feeling_after') }}">
+                            <div class="invalid-feedback">
+                                {{ $errors->first('feeling_after') }}
+                            </div>
                         </div>
                     </div>
 
                     <label for="post_content">
                         Content
                     </label>
-
                     <textarea id="post_content" name="post_content"
                         class="form-control {{ $errors->has('post_content') ? 'is-invalid' : '' }}"
                         rows="8">{{ old('post_content') }}</textarea>
-                    @if ($errors->has('post_content'))
+                    @error('post_content')
                         <div class="invalid-feedback">
-                            {{ $errors->first('post_content') }}
+                            {{ $message }}
                         </div>
-                    @endif
+                    @enderror
         </div>
 
         <div class="mt-5">

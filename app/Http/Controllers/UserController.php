@@ -10,9 +10,11 @@ use Illuminate\Support\Facades\Validator;
 use Intervention\Image\ImageManagerStatic as Image;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Hash;
+use App\Services\UserService;
 
 class UserController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -77,7 +79,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $auth_user = Auth::user();
         // バリデーション
         $rules = [
@@ -86,10 +88,10 @@ class UserController extends Controller
             'email' => ['required'],
             'current_password' => ['required'],
         ];
-        
-        if(isset($request->password)){
-            $rules['password']='min:8';
-            $rules['password_confirmation']='same:password';
+
+        if (isset($request->password)) {
+            $rules['password'] = 'min:8';
+            $rules['password_confirmation'] = 'same:password';
         }
 
         $messages = [
@@ -107,7 +109,7 @@ class UserController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages, $attributes);
 
         // サムネイル画像の変更がある場合は格納
-        $uploadfile=$request->thumbnail;
+        $uploadfile = $request->thumbnail;
         if (!empty($uploadfile)) {
             $thumbnailname = $uploadfile->hashName();
             $uploadfile->storeAs('public/user', $thumbnailname);
@@ -115,7 +117,7 @@ class UserController extends Controller
             $thumbnailname = $auth_user->thumbnail;
         }
 
-        if(isset($request->delete_thumbnail)){
+        if (isset($request->delete_thumbnail)) {
             $thumbnailname = null;
         }
 
@@ -127,7 +129,7 @@ class UserController extends Controller
                     ->route('user.edit', [$auth_user])
                     ->withErrors($validator)
                     ->withInput();
-            // うまくいった場合
+                // うまくいった場合
             } else {
                 $insert_data = [
                     'name' => $request->name,
@@ -136,7 +138,7 @@ class UserController extends Controller
                 ];
 
                 // パスワードの更新がある場合
-                if(isset($request->password)){
+                if (isset($request->password)) {
                     $insert_password = $request->password;
                     $insert_data['password'] = Hash::make($insert_password);
                 }
@@ -146,7 +148,7 @@ class UserController extends Controller
                 $request->session()->flash('success', 'Saved');
                 return redirect()->route('user.index');
             }
-        // 現在のパスワードと一致しない場合
+            // 現在のパスワードと一致しない場合
         } else {
             // with validation error
             if ($validator->fails()) {
