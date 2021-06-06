@@ -56,6 +56,7 @@ class ArticleController extends Controller
         $create_post_date=$request->only(
             'post_date','title','feeling_before','feeling_after','post_content'
         );
+        
         $auth_user_id=Auth::id();
         $create_post_date=array_merge($create_post_date,['user_id'=>$auth_user_id]);
         DB::table('articles')

@@ -31,7 +31,8 @@
                         <li><a href="https://www.facebook.com/KentoTakanash1" target="_blank" class="icoFacebook"
                                 title="Facebook"><i class="fa fa-facebook" rel=”noopener noreferrer”></i></a></li>
                         <li><a href="https://www.linkedin.com/in/%E8%B3%A2%E4%BA%BA-%E9%AB%98%E6%A2%A8-0786101a0/"
-                                target="_blank" class="icoLinkedin" title="Linkedin" rel=”noopener noreferrer”><i class="fa fa-linkedin"></i></a>
+                                target="_blank" class="icoLinkedin" title="Linkedin" rel=”noopener noreferrer”><i
+                                    class="fa fa-linkedin"></i></a>
                         </li>
                     </ul>
                 </div>
